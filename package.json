@@ -14,7 +14,9 @@
     "@adiwajshing/baileys": "^4.4.0",
     "@hapi/boom": "^10.0.1",
     "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "openai": "^3.2.1",
+    "ping-monitor": "^0.7.0",
     "qrcode-terminal": "^0.12.0"
   }
 }

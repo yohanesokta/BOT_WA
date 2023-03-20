@@ -55,8 +55,8 @@ async function connectToWhatsApp() {
 
   sock.ev.on("messages.upsert", async ({ messages, type }) => {
     console.log('tipe : ', type)
-    console.log(messages)
     if (type === "notify") {
+      console.log('-------------------------------------------')
       try {
         const senderNumber = messages[0].key.remoteJid
 
@@ -76,7 +76,6 @@ async function connectToWhatsApp() {
         if (isMessageFromGroup && isMessageMentionBoot && !incomingMessages.includes('/menu')) {
           async function main() {
             const result = await generateResponse(incomingMessages)
-            console.log(result)
             await sock.sendMessage(
               senderNumber,
               { text: result + '\n\n _YohanesOktanio | bot_' },
@@ -102,7 +101,16 @@ async function connectToWhatsApp() {
             2000
           )
         }
-        if (!isMessageFromGroup && !incomingMessages.includes('?')) {
+        if (!isMessageFromGroup && incomingMessages.includes('?')) {
+         async function msg(){ 
+          await sock.sendMessage(
+            senderNumber,
+            { text: "*Bot Sedang Berfikir..*" },
+            { quoted: messages[1] },
+            2000
+          )
+         }
+
           async function main() {
             const result = await generateResponse(incomingMessages)
             console.log(result)
@@ -113,6 +121,7 @@ async function connectToWhatsApp() {
               2000
             )
           }
+          msg()
           main()
         }
         if (!isMessageFromGroup && incomingMessages.includes('/info')) {
@@ -128,12 +137,12 @@ async function connectToWhatsApp() {
 
       }
       catch (error) {
-        console.log('error : ', error)
+        console.log("Error : Pesan Bukan Tulisan")
       }
     }
   })
 }
 
 connectToWhatsApp().catch((err) => {
-  console.log("Eneng Error : " + err)
+  console.log("Eneng Error : Reconneting")
 })

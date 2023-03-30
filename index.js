@@ -73,7 +73,7 @@ async function connectToWhatsApp() {
         console.log('IsI : ', incomingMessages)
 
         //if send
-        if (isMessageFromGroup && isMessageMentionBoot && !incomingMessages.includes('/menu')) {
+        if (isMessageFromGroup && isMessageMentionBoot && !incomingMessages.includes('/menu') && incomingMessages.includes('?')) {
           async function main() {
             const result = await generateResponse(incomingMessages)
             await sock.sendMessage(
@@ -102,21 +102,21 @@ async function connectToWhatsApp() {
           )
         }
         if (!isMessageFromGroup && incomingMessages.includes('?')) {
-         async function msg(){ 
-          await sock.sendMessage(
-            senderNumber,
-            { text: "*Bot Sedang Berfikir..*" },
-            { quoted: messages[1] },
-            2000
-          )
-         }
+          async function msg() {
+            await sock.sendMessage(
+              senderNumber,
+              { text: "*Berfikir Keras 😇*" },
+              { quoted: messages[1] },
+              2000
+            )
+          }
 
           async function main() {
             const result = await generateResponse(incomingMessages)
             console.log(result)
             await sock.sendMessage(
               senderNumber,
-              { text: result + '\n\n _YohanesOktanio | bot_' },
+              { text: result + "\n\n *Yohanes Oktanio | GPT-4*" },
               { quoted: messages[0] },
               2000
             )
@@ -132,12 +132,13 @@ async function connectToWhatsApp() {
             2000
           )
         }
-
+        console.log('-------------------------------------------')
 
 
       }
       catch (error) {
         console.log("Error : Pesan Bukan Tulisan")
+        console.log('-------------------------------------------')
       }
     }
   })
@@ -154,12 +155,12 @@ const Monitor = require('ping-monitor');
 
 keepAlive();
 const monitor = new Monitor({
-    website: '',
-    title: 'NAME',
-    interval: 2
+  website: '',
+  title: 'NAME',
+  interval: 2
 });
 
 monitor.on('up', (res) => console.log(`${res.website} its on.`));
 monitor.on('down', (res) => console.log(`${res.website} it has died - ${res.statusMessage}`));
-monitor.on('stop', (website) => console.log(`${website} has stopped.`) );
+monitor.on('stop', (website) => console.log(`${website} has stopped.`));
 monitor.on('error', (error) => console.log(error));
